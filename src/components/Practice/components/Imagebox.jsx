@@ -27,7 +27,7 @@ const ImageBox = () => {
 
   return (
     <div className="" >
-      <div className="bg-red   rounded-lg overflow-hidden">
+      <div className="bg-red rounded-lg overflow-hidden">
       <Lottie 
 	    options={defaultOptions}
         height={600}
