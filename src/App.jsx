@@ -1,4 +1,4 @@
-import './App.css'
+import Practice from './components/Practice/Practice'
 import Main from './components/Main'
 
 function App() {
@@ -6,6 +6,7 @@ function App() {
   return (
     <div className='scroll-smooth'>
       <Main/>
+      <Practice />
     </div>
   );
 }
