@@ -1,8 +1,9 @@
 // LoginPage.js
-
-
 import image from "../../assets/images/Aceprep.png";
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import  * as emoji from 'node-emoji'
+import Lottie from 'react-lottie'
+import hello from '../../assets/lotties/hello';
 
 const DisableScrollComponent = () => {
     useEffect(() => {
@@ -15,8 +16,19 @@ const DisableScrollComponent = () => {
       };
     }, []);
   
+    const emoji2 =emoji.find("wave")
+
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: hello,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+      }
+    };
+
     return (
-        <div className="h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900 via-gray-100 to-blue-900 flex justify-center items-center h-screen fixed-div  ">
+        <div className=" bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900 via-gray-100 to-blue-900 flex justify-center items-center h-screen fixed-div  ">
         <div className="max-w-md w-full p-6 bg-white  shadow-md bg-opacity-30 backdrop-blur-sm rounded-3xl">
           <div className="text-center ">
               <div className='flex w-20 mx-auto  '>
@@ -28,7 +40,8 @@ const DisableScrollComponent = () => {
               </div>
           
             <h2 className="mb-2 text-2xl font-bold">Welcome Back!</h2>
-            <p className="text-gray-600">Glad to see you again, <br />Login to your account below</p>
+            <Lottie   options={defaultOptions}             height={100}              width={200}            />
+            <p className="text-gray-600">Glad to see you again {emoji2.emoji} , <br />Login to your account below</p>
           </div>
           <form className="mt-6">
           <button
