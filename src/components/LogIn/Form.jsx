@@ -56,11 +56,6 @@ const DisableScrollComponent = () => {
             className="flex items-center justify-center w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4  focus:outline-none focus:ring-2 focus:ring-offset-2  opacity-100 hover:bg-gray-100 "
           >
             Continue with Google
-            {/* <img
-          src="/path/to/google-logo.png" // Replace with the actual Google logo image path
-          alt="Google"
-          className="h-5 w-5 ml-2"
-        /> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               x="0px"
@@ -105,7 +100,7 @@ const DisableScrollComponent = () => {
             >
               Password
             </label>
-            <input
+            <input 
               type="password"
               id="password"
               className="w-full px-4 py-2 border rounded bg-[#e8ebf2] focus:outline-none hover:bg-white  hover:opacity-100 focus:border-blue-500 transition duration-300 focus:opacity-100"
@@ -131,3 +126,6 @@ const DisableScrollComponent = () => {
 };
 
 export default DisableScrollComponent;
+
+
+

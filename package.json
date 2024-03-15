@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
+    "bootstrap": "^5.3.3",
     "gsap": "^3.12.5",
     "node-emoji": "^2.1.3",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "react-lottie": "^1.2.4"
