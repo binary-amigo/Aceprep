@@ -1,12 +1,10 @@
-import Practice from './components/Practice/Practice'
-import Main from './components/Main'
-import Login from './components/Login';
+import Resources from "./components/Resources"
 
 function App() {
 
   return (
     <div className='scroll-smooth'>
-      <Login />
+     <Resources />
     </div>
   );
 }
