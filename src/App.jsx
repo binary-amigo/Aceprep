@@ -1,10 +1,12 @@
-function App() {
+import React from 'react'
+import MockQuestions from './components/MockQuestion'
 
+function Kratika() {
   return (
-    <div className='scroll-smooth'>
-
+    <div>
+      <MockQuestions />
     </div>
-  );
+  )
 }
 
-export default App
+export default Kratika
