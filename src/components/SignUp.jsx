@@ -1,5 +1,5 @@
 import image from "../assets/images/Aceprep.png";
-import { FaUser, FaEnvelope, FaLock, FaPhone, FaGoogle } from "react-icons/fa"; // Ensure you have react-icons installed
+import { FaUser, FaEnvelope, FaLock, FaPhone} from "react-icons/fa"; // Ensure you have react-icons installed
 import animationData from "../assets/lotties/signupanimation.json";
 import Lottie from "react-lottie";
 
@@ -169,14 +169,4 @@ const SignUpCard = () => {
 };
 
 export default SignUpCard;
-=======
-import React from 'react'
-import SignUpCard from './SignUp/Sign'
 
-function SignUp() {
-  return (
-   <SignUpCard />
-  )
-}
-
-export default SignUp
