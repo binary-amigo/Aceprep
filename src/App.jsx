@@ -1,14 +1,10 @@
-import Login from './components/Login'
 
-function App() {
 
+function Kratika() {
   return (
-    <div className='scroll-smooth'>
-      <Login/>
 
-      
     </div>
-  );
+  )
 }
 
-export default App
+export default Kratika
