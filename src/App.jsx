@@ -1,13 +1,17 @@
+import InnerResource from "./components/InnerResource";
+import Login from "./components/Login";
+import Main from "./components/Main";
+import Mock from "./components/Mock";
+import Practice from "./components/Practice/Practice";
+import Resources from "./components/Resources";
+import SignUpCard from "./components/SignUp";
 
-import SignUp from './components/SignUp'
-
-function App() {
-
+function ajay() {
   return (
-    <div className='scroll-smooth'>
-        <SignUp/>
+    <div>
+      <Main />
     </div>
   );
 }
 
-export default App
+export default ajay;
