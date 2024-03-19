@@ -6,12 +6,14 @@ import Practice from "./components/Practice/Practice";
 import Resources from "./components/Resources";
 import SignUpCard from "./components/SignUp";
 
-function ajay() {
+<function ajay() {
   return (
     <div>
       <Main />
+
     </div>
-  );
+  )
 }
 
 export default ajay;
+
