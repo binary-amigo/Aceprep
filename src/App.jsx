@@ -11,11 +11,10 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/main" element={<Main />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/resources" element={<Resource />} />
-        <Route path="/" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/practice" element={<Practice />} />
         <Route path="/mock" element={<Mock />} />
         <Route path="/ats" element={<AIInput />} />

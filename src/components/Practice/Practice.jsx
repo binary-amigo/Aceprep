@@ -7,12 +7,14 @@ import Navbar from "../Main/Navbar"
 
 function Practice() {
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar />
-      <ImageBox />
-      <CardSection />
-      <SheetCard />
-      <FooterImage />
+      <div className="pt-16"> {/* Add padding-top to account for fixed navbar */}
+        <ImageBox />
+        <CardSection />
+        <SheetCard />
+        <FooterImage />
+      </div>
     </div>
   )
 }
