@@ -1,26 +1,31 @@
-import Main from "./components/Main";
-import AIInput from "./components/AIMock/AIInput";
-import Practice from "./components/Practice/Practice";
-import Resource from "./components/Resources";
-import SignUp from "./components/SignUp";
-import Login from "./components/Login.jsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Mock from "./components/Mock.jsx";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SiteLayout from "./components/layout/SiteLayout";
+import Home from "./pages/Home";
+import Mock from "./pages/Mock";
+import Ats from "./pages/Ats";
+import Practice from "./pages/Practice";
+import Resources from "./pages/Resources";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Verify from "./pages/Verify";
+import NotFound from "./pages/NotFound";
 
-function App() {
+export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/mock" element={<Mock />} />
+          <Route path="/ats" element={<Ats />} />
+          <Route path="/practice" element={<Practice />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/resources" element={<Resource />} />
-        <Route path="/practice" element={<Practice />} />
-        <Route path="/mock" element={<Mock />} />
-        <Route path="/ats" element={<AIInput />} />
+        <Route path="/verify" element={<Verify />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
-
-export default App;
