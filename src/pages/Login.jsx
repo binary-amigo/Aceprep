@@ -1,29 +1,30 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/layout/AuthLayout";
 import GoogleButton, { OrDivider } from "../components/ui/GoogleButton";
-import { API_URL } from "../config";
+import { useAuth } from "../auth/AuthContext";
+import { api } from "../lib/api";
 
 export default function Login() {
+  const { user, login } = useAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const next = state?.from || "/";
+  if (user) return <Navigate to={next} replace />;
+
+  const run = async (path, body) => {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      if (!res.ok) throw new Error("Login failed");
-      // TODO: store the session and redirect.
-    } catch {
-      setError("We couldn't sign you in. Check your email and password and try again.");
+      login(await api(path, { method: "POST", body }));
+      navigate(next, { replace: true });
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -31,10 +32,19 @@ export default function Login() {
 
   return (
     <AuthLayout title="Welcome back" subtitle="Log in to continue your prep.">
-      <GoogleButton />
+      <GoogleButton
+        onSuccess={({ credential }) => run("/login/google", { credential })}
+        onError={() => setError("Google sign-in was cancelled or failed. Please try again.")}
+      />
       <OrDivider />
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          run("/login", { email, password });
+        }}
+        className="space-y-5"
+      >
         <div>
           <label htmlFor="email" className="label">
             Email
@@ -51,14 +61,9 @@ export default function Login() {
           />
         </div>
         <div>
-          <div className="flex items-center justify-between">
-            <label htmlFor="password" className="label">
-              Password
-            </label>
-            <a href="#" className="mb-1.5 text-sm font-medium text-blue-600 hover:text-blue-700">
-              Forgot password?
-            </a>
-          </div>
+          <label htmlFor="password" className="label">
+            Password
+          </label>
           <input
             id="password"
             type="password"
@@ -70,11 +75,6 @@ export default function Login() {
             className="input"
           />
         </div>
-
-        <label className="flex items-center gap-2.5 text-sm text-slate-700">
-          <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-          Keep me logged in
-        </label>
 
         {error && (
           <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">

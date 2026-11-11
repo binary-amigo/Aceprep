@@ -3,6 +3,18 @@ import { NavLink, useLocation } from "react-router-dom";
 import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
 import Logo from "../ui/Logo";
 import Button from "../ui/Button";
+import { useAuth } from "../../auth/AuthContext";
+
+function Avatar({ user }) {
+  const initial = (user.firstName || user.email || "?").charAt(0).toUpperCase();
+  return user.picture ? (
+    <img src={user.picture} alt="" referrerPolicy="no-referrer" className="h-9 w-9 rounded-full object-cover ring-2 ring-blue-100" />
+  ) : (
+    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold text-white ring-2 ring-blue-100">
+      {initial}
+    </span>
+  );
+}
 
 const links = [
   { to: "/mock", label: "Mock Interview" },
@@ -15,6 +27,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -50,10 +63,23 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button to="/login" variant="ghost">
-            Log in
-          </Button>
-          <Button to="/signup">Get started</Button>
+          {user ? (
+            <>
+              <span className="flex items-center gap-2.5 pr-1 text-sm font-medium text-slate-700">
+                <Avatar user={user} /> {user.firstName}
+              </span>
+              <Button variant="ghost" onClick={logout}>
+                Log out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button to="/login" variant="ghost">
+                Log in
+              </Button>
+              <Button to="/signup">Get started</Button>
+            </>
+          )}
         </div>
 
         <button
@@ -76,12 +102,23 @@ export default function Navbar() {
                 {l.label}
               </NavLink>
             ))}
-            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-100 pt-4">
-              <Button to="/login" variant="secondary">
-                Log in
-              </Button>
-              <Button to="/signup">Get started</Button>
-            </div>
+            {user ? (
+              <div className="mt-3 flex items-center justify-between gap-3 border-t border-slate-100 pt-4">
+                <span className="flex min-w-0 items-center gap-2.5 text-sm font-medium text-slate-700">
+                  <Avatar user={user} /> <span className="truncate">{user.email}</span>
+                </span>
+                <Button variant="secondary" onClick={logout}>
+                  Log out
+                </Button>
+              </div>
+            ) : (
+              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-100 pt-4">
+                <Button to="/login" variant="secondary">
+                  Log in
+                </Button>
+                <Button to="/signup">Get started</Button>
+              </div>
+            )}
           </div>
         </div>
       )}

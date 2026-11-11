@@ -1,16 +1,35 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/layout/AuthLayout";
 import GoogleButton, { OrDivider } from "../components/ui/GoogleButton";
+import { useAuth } from "../auth/AuthContext";
+import { api } from "../lib/api";
 
 const empty = { firstName: "", lastName: "", email: "", phone: "", password: "", confirm: "" };
 
 export default function SignUp() {
+  const { user, login } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState(empty);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  if (user) return <Navigate to="/" replace />;
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const run = async (path, body) => {
+    setError("");
+    setLoading(true);
+    try {
+      login(await api(path, { method: "POST", body }));
+      navigate("/", { replace: true });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,14 +41,23 @@ export default function SignUp() {
       setError("Passwords don't match.");
       return;
     }
-    setError("");
-    // TODO: send to the backend, then verify the email with an OTP.
-    navigate("/verify", { state: { email: form.email } });
+    run("/signup", {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      email: form.email,
+      phone: form.phone,
+      password: form.password,
+      confirmPassword: form.confirm,
+    });
   };
 
   return (
     <AuthLayout title="Create your account" subtitle="Start preparing in under a minute.">
-      <GoogleButton text="signup_with" />
+      <GoogleButton
+        text="signup_with"
+        onSuccess={({ credential }) => run("/login/google", { credential })}
+        onError={() => setError("Google sign-up was cancelled or failed. Please try again.")}
+      />
       <OrDivider>or sign up with email</OrDivider>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -44,7 +72,7 @@ export default function SignUp() {
             <label htmlFor="lastName" className="label">
               Last name
             </label>
-            <input id="lastName" required autoComplete="family-name" value={form.lastName} onChange={set("lastName")} className="input" />
+            <input id="lastName" autoComplete="family-name" value={form.lastName} onChange={set("lastName")} className="input" />
           </div>
         </div>
         <div>
@@ -106,8 +134,8 @@ export default function SignUp() {
           </p>
         )}
 
-        <button type="submit" className="btn btn-primary btn-lg w-full">
-          Create account
+        <button type="submit" disabled={loading} className="btn btn-primary btn-lg w-full">
+          {loading ? "Creating account…" : "Create account"}
         </button>
       </form>
 

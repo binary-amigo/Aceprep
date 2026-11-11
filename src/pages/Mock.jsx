@@ -10,6 +10,7 @@ import {
 } from "react-icons/hi2";
 import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
+import { useAuth } from "../auth/AuthContext";
 
 const roles = ["Frontend Developer", "Backend Developer", "Full Stack Developer", "Data Analyst", "DevOps Engineer", "Mobile Developer"];
 const levels = ["Fresher", "1–3 years", "3–5 years", "5+ years"];
@@ -42,6 +43,7 @@ function Choice({ name, value, checked, onChange, children }) {
 }
 
 export default function Mock() {
+  const { user } = useAuth();
   const [role, setRole] = useState(roles[0]);
   const [level, setLevel] = useState(levels[0]);
   const [type, setType] = useState(types[0].id);
@@ -145,11 +147,18 @@ export default function Mock() {
                   <div>
                     <p className="font-semibold text-slate-900">Your interview is ready</p>
                     <p className="mt-0.5 text-sm text-slate-600">
-                      {role} · {level} · {typeLabel} · {duration}. Log in to begin and save your feedback.
+                      {role} · {level} · {typeLabel} · {duration}.{" "}
+                      {user
+                        ? "The live AI interviewer is launching soon. Your settings are ready to go."
+                        : "Log in to begin and save your feedback."}
                     </p>
                   </div>
                 </div>
-                <Button to="/login">Log in to start</Button>
+                {!user && (
+                  <Button to="/login" state={{ from: "/mock" }}>
+                    Log in to start
+                  </Button>
+                )}
               </div>
             )}
           </form>
