@@ -14,12 +14,14 @@ npm run build    # production build in dist/
 
 ## Configuration
 
-Create a `.env` file to override the defaults:
+Set these in Vercel (Project → Settings → Environment Variables) or a local `.env`:
 
 ```bash
-VITE_API_URL=https://api.your-backend.com          # used by the login form
+VITE_API_URL=https://your-aceprep-api.vercel.app   # required: the aceprep-backend deployment
 VITE_GOOGLE_CLIENT_ID=xxxx.apps.googleusercontent.com
 ```
+
+Login, sign-up and Google sign-in call the [aceprep-backend](https://github.com/binary-amigo/aceprep-backend) API. For the Google button to work, every site URL must be listed under **Authorized JavaScript origins** for the OAuth client in Google Cloud Console.
 
 ## Pages
 
@@ -30,7 +32,7 @@ VITE_GOOGLE_CLIENT_ID=xxxx.apps.googleusercontent.com
 | `/ats` | ATS resume check (upload + job description) |
 | `/practice` | Practice areas and sheets |
 | `/resources` | Learning resources with search and category filters |
-| `/login`, `/signup`, `/verify` | Auth flow (sign up → email code) |
+| `/login`, `/signup` | Email/password and Google sign-in |
 
 ## Design
 
